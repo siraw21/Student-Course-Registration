@@ -1,0 +1,11 @@
+{% extends 'base.html' %} {% block title %} <title>Enrollment</title> {%
+endblock %} {% block content %}
+<h1>Enrollments</h1>
+<div>
+  {% for Enrollment in result %}
+  <div>
+    <span>Student ID: {{Enrollment.student_id}}</span>
+    <span>Course ID: {{Enrollment.course_id}}</span>
+  </div>
+  {% endfor %} {% endblock %}
+</div>

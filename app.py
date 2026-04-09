@@ -61,8 +61,8 @@ def student():
 def admin():
    return render_template('admin_dashboard.html')
 
-@app.route("/add_course", methods=['GET','POST'])
-def add_course():
+@app.route("/new_course", methods=['GET','POST'])
+def create_course():
 
    if request.method == 'POST':
       title = request.form.get('title')
@@ -74,13 +74,13 @@ def add_course():
 
          db.session.add(course)
          db.session.commit()
-         return redirect(url_for('add_course'))
+         return redirect(url_for('admin'))
    else:
-      return render_template('add_course.html')
+      return render_template('create_course.html')
 
 
 @app.route("/courses")
-def get_course():
+def list_course():
    courses = Course.query.all()
 
    result = []
@@ -92,7 +92,7 @@ def get_course():
             'code': course.code
          })
          
-   return render_template('get_course.html', result=result)
+   return render_template('list_course.html', result=result)
 
 @app.route("/enrollment",)
 def enroll_course():
@@ -107,7 +107,7 @@ def enroll_course():
                'code': course.code
             })
          
-      return render_template('enrollment.html', result=result)
+      return render_template('enroll_course.html', result=result)
 
 @app.route("/enroll", methods=["GET"])
 def enroll():
@@ -121,8 +121,8 @@ def enroll():
 
    return redirect(url_for('student'))
 
-@app.route("/get_enrolled",)
-def get_enrolled():
+@app.route("/list_enrollments",)
+def list_enrolled_students():
       enrollments = Enrollment.query.all()
 
       result = []
@@ -134,7 +134,7 @@ def get_enrolled():
                'student_id': enrollment.student_id
             })
          
-      return render_template('get_enrolled.html', result=result)
+      return render_template('list_enrollments.html', result=result)
 
 # Run app
 if __name__ == "__main__":

@@ -1,0 +1,15 @@
+{% extends 'base.html' %} {% block title %} <title>New course</title> {%
+endblock %} {% block content %}
+<h1>Add Course</h1>
+<form action="{{url_for('create_course')}}" method="POST">
+  <div>
+    <label for="course_title">Title:</label>
+    <input type="text" name="title" id="course_title" required /><br /><br />
+  </div>
+  <div>
+    <label for="course_code">Course Code:</label>
+    <input type="text" name="code" id="course_code" required />
+  </div>
+  <button>Add</button>
+</form>
+{% endblock %}

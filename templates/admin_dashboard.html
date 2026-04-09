@@ -1,18 +1,13 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Admin Dashboard</title>
-  </head>
-  <body>
-    <h1>Welcome, Admin Dashboard</h1>
-    <div>
-      <ul>
-        <li><a href="{{url_for('get_course')}}">View all Course</a></li>
-        <li><a href="{{url_for('get_enrolled')}}">View all Enrollment</a></li>
-        <li><a href="{{url_for('add_course')}}">Add Course</a></li>
-      </ul>
-    </div>
-  </body>
-</html>
+{% extends 'base.html' %} {% block title %} <title>Admin Dashboard</title> {%
+endblock %} {% block content %}
+<h1>Welcome, Admin Dashboard</h1>
+<div>
+  <ul>
+    <li><a href="{{url_for('list_course')}}">View all Course</a></li>
+    <li>
+      <a href="{{url_for('list_enrolled_students')}}">View all Enrollment</a>
+    </li>
+    <li><a href="{{url_for('create_course')}}">Add Course</a></li>
+  </ul>
+</div>
+{% endblock %}
