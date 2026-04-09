@@ -2,10 +2,21 @@
 endblock %} {% block content %}
 <h1>Enrollments</h1>
 <div>
-  {% for Enrollment in result %}
-  <div>
-    <span>Student ID: {{Enrollment.student_id}}</span>
-    <span>Course ID: {{Enrollment.course_id}}</span>
-  </div>
-  {% endfor %} {% endblock %}
+  <table border="1">
+    <tr>
+      <th>Student Name</th>
+      <th>Enrolled Course</th>
+      <th>Course Code</th>
+      <th>Enrolled At</th>
+    </tr>
+    {% for enrollment in result %}
+    <tr>
+      <td>{{enrollment.student.name}}</td>
+      <td>{{enrollment.course.title}}</td>
+      <td>{{enrollment.course.code}}</td>
+      <td>{{enrollment.created_At}}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endblock %}
 </div>

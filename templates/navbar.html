@@ -1,1 +1,28 @@
-<div style="background-color: #22226e; padding: 1rem; color: white">Navbar</div>
+<div
+  style="
+    background-color: #22226e;
+    padding: 1rem;
+    color: white;
+    list-style-type: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  "
+>
+  <div class="brand">Student Course Registration</div>
+  <nav>
+    <ul
+      style="
+        display: flex;
+        list-style-type: none;
+        gap: 1rem;
+        text-decoration: none;
+      "
+    >
+      <li><a style="color: white" href="{{url_for('home')}}">Home</a></li>
+      <li><a style="color: white" href="#">About</a></li>
+      <li><a style="color: white" href="#">Contact</a></li>
+    </ul>
+  </nav>
+</div>

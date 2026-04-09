@@ -21,7 +21,7 @@ class User(db.Model):
      name = db.Column(db.String(100), nullable=False)
      role = db.Column(db.String(100), nullable=False)
 
-     createdAt = db.Column(db.DateTime, server_default=func.now())
+     created_At = db.Column(db.DateTime, server_default=func.now())
 
      def __repr__(self):
        return f"Name : {self.name}, Role: {self.role}"
@@ -31,7 +31,14 @@ class Course(db.Model):
      title = db.Column(db.String(50), nullable=False)
      code = db.Column(db.String(20), nullable=False)
 
-     createdAt = db.Column(db.DateTime, server_default=func.now())
+     created_At = db.Column(db.DateTime, server_default=func.now())
+
+     def to_dict(self):
+        return {
+           "id": self.id,
+           "title": self.title,
+           "code": self.code
+        }
 
      def __repr__(self):
        return f"Title : {self.title}, Code: {self.code}" 
@@ -41,7 +48,10 @@ class Enrollment(db.Model):
      course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
      student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-     createdAt = db.Column(db.DateTime, server_default=func.now())
+     created_At = db.Column(db.DateTime, server_default=func.now())
+
+     course = db.relationship('Course', backref='enrollments')
+     student = db.relationship('User', backref='enrollments')
 
      def __repr__(self):
        return f"Course : {self.course_id}, Student: {self.student_id}"
@@ -82,59 +92,54 @@ def create_course():
 @app.route("/courses")
 def list_course():
    courses = Course.query.all()
-
-   result = []
-   if courses:
-      for course in courses:
-         result.append({
-            'id': course.id,
-            'title': course.title,
-            'code': course.code
-         })
+   result = [course.to_dict() for course in courses]
          
    return render_template('list_course.html', result=result)
 
-@app.route("/enrollment",)
+@app.route("/enrollment", methods=["GET", "POST"])
 def enroll_course():
-      courses = Course.query.all()
+      if request.method == "GET":
+         courses = Course.query.all()
+         result = [course.to_dict() for course in courses]
+         return render_template('enroll_course.html', result=result)
+      elif request.method == "POST":
+         course_id = request.form.get('course_id')
+         student_id = 1;
 
-      result = []
-      if courses:
-         for course in courses:
-            result.append({
-               'id': course.id,
-               'title': course.title,
-               'code': course.code
-            })
-         
-      return render_template('enroll_course.html', result=result)
+         enrollment = Enrollment(course_id = course_id, student_id = student_id)
+         db.session.add(enrollment)
+         db.session.commit()
+         return redirect(url_for('student'))
+      else:
+         return "Error at enroll course"
 
-@app.route("/enroll", methods=["GET"])
-def enroll():
+# @app.route("/enroll", methods=["POST"])
+# def enroll():
    
-   course_id = request.args.get('course_id')
-   student_id = 1;
+#    course_id = request.form.get('course_id')
+#    student_id = 1;
 
-   enrollment = Enrollment(course_id = course_id, student_id = student_id)
-   db.session.add(enrollment)
-   db.session.commit()
+#    enrollment = Enrollment(course_id = course_id, student_id = student_id)
+#    db.session.add(enrollment)
+#    db.session.commit()
 
-   return redirect(url_for('student'))
+#    return redirect(url_for('student'))
 
 @app.route("/list_enrollments",)
 def list_enrolled_students():
       enrollments = Enrollment.query.all()
 
-      result = []
-      if enrollments:
-         for enrollment in enrollments:
-            result.append({
-               'id': enrollment.id,
-               'course_id': enrollment.course_id,
-               'student_id': enrollment.student_id
-            })
+      # result = []
+      # if enrollments:
+      #    for enrollment in enrollments:
+      #       result.append({
+      #          'id': enrollment.id,
+      #          'course_id': enrollment.course_id,
+      #          'student_id': enrollment.student_id,
+      #          'createdAt': enrollment.created_At
+      #       })
          
-      return render_template('list_enrollments.html', result=result)
+      return render_template('list_enrollments.html', result=enrollments)
 
 # Run app
 if __name__ == "__main__":
