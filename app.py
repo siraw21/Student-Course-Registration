@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
+from sqlalchemy.sql import func
 
 # Create Flask Instance
 app = Flask(__name__)
@@ -10,11 +12,16 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localh
 # Create SQLALchemy instance
 db = SQLAlchemy(app)
 
+# Create instance of migration
+migrate = Migrate(app, db)
+
 # Create Models
 class User(db.Model):
      id = db.Column(db.Integer, primary_key=True)
      name = db.Column(db.String(100), nullable=False)
      role = db.Column(db.String(100), nullable=False)
+
+     createdAt = db.Column(db.DateTime, server_default=func.now())
 
      def __repr__(self):
        return f"Name : {self.name}, Role: {self.role}"
@@ -24,16 +31,20 @@ class Course(db.Model):
      title = db.Column(db.String(50), nullable=False)
      code = db.Column(db.String(20), nullable=False)
 
+     createdAt = db.Column(db.DateTime, server_default=func.now())
+
      def __repr__(self):
        return f"Title : {self.title}, Code: {self.code}" 
 
 class Enrollment(db.Model):
      id = db.Column(db.Integer, primary_key=True)
-     course_id = db.Column(db.Integer, nullable=False)
-     student_id = db.Column(db.Integer, nullable=False)
+     course_id = db.Column(db.Integer, db.ForeignKey('course.id'), nullable=False)
+     student_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+     createdAt = db.Column(db.DateTime, server_default=func.now())
 
      def __repr__(self):
-       return f"Course : {self.course_id}, Student: {self.Student_id}"
+       return f"Course : {self.course_id}, Student: {self.student_id}"
 
 
 # Create Routes
@@ -127,6 +138,6 @@ def get_enrolled():
 
 # Run app
 if __name__ == "__main__":
-    with app.app_context():
-      db.create_all()
+   #  with app.app_context():
+   #    db.create_all()
     app.run(debug=True)
