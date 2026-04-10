@@ -1,13 +1,16 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from sqlalchemy.sql import func
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Create Flask Instance
 app = Flask(__name__)
 
 # Connection String
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql+mysqlconnector://root:root@localhost/course_registration_db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.secret_key = 'first_secret_key'
 
 # Create SQLALchemy instance
 db = SQLAlchemy(app)
@@ -18,10 +21,17 @@ migrate = Migrate(app, db)
 # Create Models
 class User(db.Model):
      id = db.Column(db.Integer, primary_key=True)
-     name = db.Column(db.String(100), nullable=False)
-     role = db.Column(db.String(100), nullable=False)
+     username = db.Column(db.String(100), nullable=False)
+     role = db.Column(db.String(100), nullable=False, default="student")
+     password_hash = db.Column(db.String(255), nullable=False)
 
      created_At = db.Column(db.DateTime, server_default=func.now())
+
+     def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+     
+     def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
      def __repr__(self):
        return f"Name : {self.name}, Role: {self.role}"
@@ -63,13 +73,76 @@ class Enrollment(db.Model):
 def home():
   return render_template('index.html')
 
-@app.route("/student")
-def student():
-   return render_template('student_dashboard.html')
 
-@app.route("/admin")
-def admin():
-   return render_template('admin_dashboard.html')
+
+# Auth routes
+@app.route("/login", methods=["GET","POST"])
+def login():
+   if request.method == "GET":
+       return render_template('login.html')
+   elif request.method == "POST":
+      username = request.form.get('username')
+      password = request.form.get('password')
+
+      user = User.query.filter_by(username = username).first()
+
+      if user and user.check_password(password):
+            session['username'] = username
+            session['role'] = user.role
+            return redirect(url_for('dashboard'))
+      else: 
+         return render_template('index.html', error = "sth wrong")
+
+@app.route("/register", methods=["GET","POST"])
+def register():
+   if request.method == "GET":
+      return render_template('register.html')
+   elif request.method == "POST":
+      username = request.form.get('username')
+      password = request.form.get('password')
+      role = "student"
+      
+      user = User.query.filter_by(username = username).first()
+      if user and user.check_password(password):
+            return render_template("index.html", error = "User already exits")
+      else:
+          
+          new_user = User(username = username)
+          new_user.set_password(password)
+
+          db.session.add(new_user)
+          db.session.commit()
+          session['username'] = username
+          session['role'] = role
+          return redirect(url_for('dashboard'))
+      
+@app.route("/create_admin")
+def create_admin():
+    new_user = User(username = "admin", role = "admin")
+    new_user.set_password("admin123")
+
+    db.session.add(new_user)
+    db.session.commit()
+    session['username'] = "admin"
+    session['role'] = "admin"
+    return redirect(url_for('dashboard'))
+      
+@app.route("/dashboard")
+def dashboard():
+    if "username" in session:
+         if session['role'] == "student":
+            return render_template('student_dashboard.html')
+         elif session['role'] == "admin":
+            return render_template('admin_dashboard.html')
+         else:
+            return render_template('index.html', error= "Invalid role")
+    else:
+        return render_template('index.html', error= "doesn't access")
+        
+@app.route("/logout", methods=["GET"])
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('home'))
 
 @app.route("/new_course", methods=['GET','POST'])
 def create_course():
@@ -113,36 +186,13 @@ def enroll_course():
       else:
          return "Error at enroll course"
 
-# @app.route("/enroll", methods=["POST"])
-# def enroll():
-   
-#    course_id = request.form.get('course_id')
-#    student_id = 1;
-
-#    enrollment = Enrollment(course_id = course_id, student_id = student_id)
-#    db.session.add(enrollment)
-#    db.session.commit()
-
-#    return redirect(url_for('student'))
 
 @app.route("/list_enrollments",)
 def list_enrolled_students():
       enrollments = Enrollment.query.all()
-
-      # result = []
-      # if enrollments:
-      #    for enrollment in enrollments:
-      #       result.append({
-      #          'id': enrollment.id,
-      #          'course_id': enrollment.course_id,
-      #          'student_id': enrollment.student_id,
-      #          'createdAt': enrollment.created_At
-      #       })
          
       return render_template('list_enrollments.html', result=enrollments)
 
 # Run app
 if __name__ == "__main__":
-   #  with app.app_context():
-   #    db.create_all()
     app.run(debug=True)
