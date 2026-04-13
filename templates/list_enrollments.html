@@ -11,12 +11,12 @@ endblock %} {% block content %}
     </tr>
     {% for enrollment in result %}
     <tr>
-      <td>{{enrollment.student.name}}</td>
+      <td>{{enrollment.student.username}}</td>
       <td>{{enrollment.course.title}}</td>
       <td>{{enrollment.course.code}}</td>
       <td>{{enrollment.created_At}}</td>
     </tr>
     {% endfor %}
   </table>
-  {% endblock %}
 </div>
+{% endblock %}
