@@ -34,7 +34,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
      def __repr__(self):
-       return f"Name : {self.name}, Role: {self.role}"
+       return f"Name : {self.username}, Role: {self.role}"
 
 class Course(db.Model):
      id = db.Column(db.Integer, primary_key=True)
@@ -105,7 +105,7 @@ def register():
       role = "student"
       
       user = User.query.filter_by(username = username).first()
-      if user and user.check_password(password):
+      if user:
             return render_template("index.html", error = "User already exits")
       else:
           
