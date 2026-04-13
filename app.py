@@ -180,6 +180,11 @@ def enroll_course():
          course_id = request.form.get('course_id')
          student_id = session.get('user_id');
 
+         existing = Enrollment.query.filter_by(course_id = course_id, student_id = student_id).first()
+
+         if existing:
+             return "Already enrolled"
+
          enrollment = Enrollment(course_id = course_id, student_id = student_id)
          db.session.add(enrollment)
          db.session.commit()
