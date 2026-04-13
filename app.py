@@ -120,16 +120,6 @@ def register():
           session['user_id'] = user.id
           return redirect(url_for('dashboard'))
       
-@app.route("/create_admin")
-def create_admin():
-    new_user = User(username = "admin", role = "admin")
-    new_user.set_password("admin123")
-
-    db.session.add(new_user)
-    db.session.commit()
-    session['username'] = "admin"
-    session['role'] = "admin"
-    return redirect(url_for('dashboard'))
       
 @app.route("/dashboard")
 def dashboard():
