@@ -140,10 +140,8 @@ def logout():
 
 @app.route("/new_course", methods=['GET','POST'])
 def create_course():
-   if 'user_id' not in session:
-        return redirect(url_for('login'))
-   else:
-      if request.method == 'POST':
+   if session['role'] == 'admin':
+        if request.method == 'POST':
          title = request.form.get('title')
          code = request.form.get('code')
 
@@ -154,8 +152,11 @@ def create_course():
             db.session.add(course)
             db.session.commit()
             return redirect(url_for('dashboard'))
-      else:
+        else:
          return render_template('create_course.html')
+        
+   else:
+      return redirect(url_for('logout'))
 
 
 @app.route("/courses")
