@@ -140,7 +140,7 @@ def logout():
 
 @app.route("/new_course", methods=['GET','POST'])
 def create_course():
-   if session['role'] == 'admin':
+   if session.get('role') == 'admin':
         if request.method == 'POST':
          title = request.form.get('title')
          code = request.form.get('code')
@@ -198,7 +198,11 @@ def enroll_course():
 def list_enrolled_students():
       if 'user_id' not in session:
         return redirect(url_for('login'))
-      enrollments = Enrollment.query.all()
+      
+      if session.get('role') == 'admin':
+         enrollments = Enrollment.query.all()
+      else: 
+         enrollments = enrollments = Enrollment.query.filter_by(student_id = session['user_id']).all()   
          
       return render_template('list_enrollments.html', result=enrollments)
 
