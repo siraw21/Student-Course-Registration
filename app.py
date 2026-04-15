@@ -34,7 +34,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
      def __repr__(self):
-       return f"Name : {self.name}, Role: {self.role}"
+       return f"Name : {self.username}, Role: {self.role}"
 
 class Course(db.Model):
      id = db.Column(db.Integer, primary_key=True)
@@ -62,6 +62,7 @@ class Enrollment(db.Model):
 
      course = db.relationship('Course', backref='enrollments')
      student = db.relationship('User', backref='enrollments')
+   
 
      def __repr__(self):
        return f"Course : {self.course_id}, Student: {self.student_id}"
@@ -89,6 +90,7 @@ def login():
       if user and user.check_password(password):
             session['username'] = username
             session['role'] = user.role
+            session['user_id'] = user.id
             return redirect(url_for('dashboard'))
       else: 
          return render_template('index.html', error = "sth wrong")
@@ -103,7 +105,7 @@ def register():
       role = "student"
       
       user = User.query.filter_by(username = username).first()
-      if user and user.check_password(password):
+      if user:
             return render_template("index.html", error = "User already exits")
       else:
           
@@ -112,24 +114,16 @@ def register():
 
           db.session.add(new_user)
           db.session.commit()
+          user = User.query.filter_by(username = username).first()
           session['username'] = username
           session['role'] = role
+          session['user_id'] = user.id
           return redirect(url_for('dashboard'))
       
-@app.route("/create_admin")
-def create_admin():
-    new_user = User(username = "admin", role = "admin")
-    new_user.set_password("admin123")
-
-    db.session.add(new_user)
-    db.session.commit()
-    session['username'] = "admin"
-    session['role'] = "admin"
-    return redirect(url_for('dashboard'))
       
 @app.route("/dashboard")
 def dashboard():
-    if "username" in session:
+    if "user_id" in session:
          if session['role'] == "student":
             return render_template('student_dashboard.html')
          elif session['role'] == "admin":
@@ -141,29 +135,34 @@ def dashboard():
         
 @app.route("/logout", methods=["GET"])
 def logout():
-    session.pop('username', None)
+    session.clear()
     return redirect(url_for('home'))
 
 @app.route("/new_course", methods=['GET','POST'])
 def create_course():
+   if session.get('role') == 'admin':
+        if request.method == 'POST':
+         title = request.form.get('title')
+         code = request.form.get('code')
 
-   if request.method == 'POST':
-      title = request.form.get('title')
-      code = request.form.get('code')
+         # Course logic
+         if title and code :
+            course = Course(title = title, code = code)
 
-      # Course logic
-      if title and code :
-         course = Course(title = title, code = code)
-
-         db.session.add(course)
-         db.session.commit()
-         return redirect(url_for('admin'))
+            db.session.add(course)
+            db.session.commit()
+            return redirect(url_for('dashboard'))
+        else:
+         return render_template('create_course.html')
+        
    else:
-      return render_template('create_course.html')
+      return redirect(url_for('logout'))
 
 
 @app.route("/courses")
 def list_course():
+   if 'user_id' not in session:
+        return redirect(url_for('login'))
    courses = Course.query.all()
    result = [course.to_dict() for course in courses]
          
@@ -171,25 +170,39 @@ def list_course():
 
 @app.route("/enrollment", methods=["GET", "POST"])
 def enroll_course():
+      if 'user_id' not in session:
+        return redirect(url_for('login'))
+      
       if request.method == "GET":
          courses = Course.query.all()
          result = [course.to_dict() for course in courses]
          return render_template('enroll_course.html', result=result)
       elif request.method == "POST":
          course_id = request.form.get('course_id')
-         student_id = 1;
+         student_id = session.get('user_id');
+
+         existing = Enrollment.query.filter_by(course_id = course_id, student_id = student_id).first()
+
+         if existing:
+             return "Already enrolled"
 
          enrollment = Enrollment(course_id = course_id, student_id = student_id)
          db.session.add(enrollment)
          db.session.commit()
-         return redirect(url_for('student'))
+         return redirect(url_for('dashboard'))
       else:
          return "Error at enroll course"
 
 
 @app.route("/list_enrollments",)
 def list_enrolled_students():
-      enrollments = Enrollment.query.all()
+      if 'user_id' not in session:
+        return redirect(url_for('login'))
+      
+      if session.get('role') == 'admin':
+         enrollments = Enrollment.query.all()
+      else: 
+         enrollments = enrollments = Enrollment.query.filter_by(student_id = session['user_id']).all()   
          
       return render_template('list_enrollments.html', result=enrollments)
 
