@@ -3,11 +3,13 @@ endblock %} {% block content %}
 <h1>Welcome, Admin Dashboard</h1>
 <div>
   <ul>
-    <li><a href="{{url_for('list_course')}}">View all Course</a></li>
+    <li><a href="{{url_for('courses.list_course')}}">View all Course</a></li>
     <li>
-      <a href="{{url_for('list_enrolled_students')}}">View all Enrollment</a>
+      <a href="{{url_for('enrollments.enrolled_courses')}}"
+        >View all Enrollment</a
+      >
     </li>
-    <li><a href="{{url_for('create_course')}}">Add Course</a></li>
+    <li><a href="{{url_for('courses.create_course')}}">Add Course</a></li>
   </ul>
 </div>
 {% endblock %}

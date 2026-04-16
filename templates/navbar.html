@@ -20,19 +20,22 @@
         text-decoration: none;
       "
     >
-      <li><a style="color: white" href="{{url_for('home')}}">Home</a></li>
-
       {% if session.get('username') %}
       <li>
-        <a style="color: white" href="{{url_for('dashboard')}}">Dashboard</a>
+        <a style="color: white" href="{{url_for('main.dashboard')}}"
+          >Dashboard</a
+        >
       </li>
       <li>
-        <a style="color: white" href="{{url_for('logout')}}">Logout</a>
+        <a style="color: white" href="{{url_for('auth.logout')}}">Logout</a>
       </li>
       {% else %}
-      <li><a style="color: white" href="{{url_for('login')}}">Login</a></li>
+      <li><a style="color: white" href="{{url_for('main.home')}}">Home</a></li>
       <li>
-        <a style="color: white" href="{{url_for('register')}}">Register</a>
+        <a style="color: white" href="{{url_for('auth.login')}}">Login</a>
+      </li>
+      <li>
+        <a style="color: white" href="{{url_for('auth.register')}}">Register</a>
       </li>
       {% endif %}
     </ul>
