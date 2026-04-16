@@ -4,9 +4,11 @@ endblock %} {% block content %}
 <div>
   <ul>
     <li>
-      <a href="{{url_for('list_enrolled_students')}}">View enrolled courses</a>
+      <a href="{{url_for('enrollments.enrolled_courses')}}"
+        >View enrolled courses</a
+      >
     </li>
-    <li><a href="{{url_for('enroll_course')}}">Enroll in course</a></li>
+    <li><a href="{{url_for('enrollments.enroll')}}">Enroll in course</a></li>
   </ul>
 </div>
 {% endblock %}
