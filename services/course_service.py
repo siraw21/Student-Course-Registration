@@ -10,6 +10,9 @@ def add_course(title, code):
       return course
   else:
      return None
+  
+def remove_course(code):
+      pass
 
 def list_all_courses():
    courses = Course.query.all()
