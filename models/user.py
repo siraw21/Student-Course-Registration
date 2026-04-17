@@ -4,10 +4,10 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 class User(db.Model):
      id = db.Column(db.Integer, primary_key=True)
-     username = db.Column(db.String(100), nullable=False)
+     full_name = db.Column(db.String(150), nullable=False)
      role = db.Column(db.String(100), nullable=False, default="student")
      password_hash = db.Column(db.String(255), nullable=False)
-
+     email = db.Column(db.String(250), nullable=False)
      created_At = db.Column(db.DateTime, server_default=func.now())
 
      def set_password(self, password):
