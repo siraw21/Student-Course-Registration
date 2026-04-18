@@ -17,7 +17,13 @@ class Course(db.Model):
         return {
            "id": self.id,
            "title": self.title,
-           "code": self.code
+           "code": self.code,
+           "credit_hours": self.credit_hours,
+           "description": self.description,
+           "category": self.category,
+           "required_year": self.required_year,
+           "instructor_name": self.instructor_name,
+           "created_At": self.created_At
         }
 
      def __repr__(self):

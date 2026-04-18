@@ -3,12 +3,6 @@
 <div>
   <h1>Login</h1>
   <form action="{{url_for('auth.login')}}" method="POST">
-    <!-- <label for="username">Username:</label>
-    <input type="text" name="username" id="username" required /><br />
-    <label for="password">Password:</label>
-    <input type="password" name="password" id="password" required /><br />
-    <button type="submit" class="btn btn-login">Login</button> -->
-
     {{ form.hidden_tag()}} {{ form.full_name.label}} {{ form.full_name}} <br />
     {{ form.password.label}} {{ form.password }} <br />
     {{ form.submit()}}

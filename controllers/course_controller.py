@@ -7,9 +7,6 @@ course_bp = Blueprint('courses', __name__)
 @course_bp.route("/new_course", methods=['GET','POST'])
 def create_course():
    if session['role'] == 'admin':
-         # if request.method == 'POST':
-         #    title = request.form.get('title')
-         #    code = request.form.get('code')
          form = CourseDetailForm()
          if form.validate_on_submit():
             title = form.title.data

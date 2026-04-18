@@ -9,7 +9,7 @@ endblock %} {% block content %}
       <th>Course Code</th>
       <th>Enrolled At</th>
     </tr>
-    {% for enrollment in result %}
+    {% for enrollment in enrollments %}
     <tr>
       <td>{{enrollment.student.full_name}}</td>
       <td>{{enrollment.course.title}}</td>

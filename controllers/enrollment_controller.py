@@ -38,4 +38,4 @@ def enrolled_courses():
       user = User.query.get(user_id)
       enrollments = list_enrolled_courses(user) 
          
-      return render_template('list_enrollments.html', result=enrollments)      
+      return render_template('list_enrollments.html', enrollments=enrollments)      

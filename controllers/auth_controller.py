@@ -8,14 +8,6 @@ auth_bp = Blueprint('auth', __name__)
 
 @auth_bp.route("/register", methods = {"GET", "POST"} )
 def register():
-    # if request.method == "POST":
-    #     username = request.form.get('username')
-    #     student_id = request.form.get('student_id')
-    #     password = request.form.get('password')
-    #     email = request.form.get('email')
-    #     year = request.form.get('year')
-        
-    #     role = "student"
         form = RegisterForm()
 
         if form.validate_on_submit():
@@ -45,9 +37,6 @@ def register():
 
 @auth_bp.route("/login", methods= ["GET", "POST"])
 def login():
-#    if request.method == "POST":
-#       username = request.form.get('username')
-#       password = request.form.get('password')
       form = LoginForm()
 
       if form.validate_on_submit():
