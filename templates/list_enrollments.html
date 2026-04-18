@@ -11,7 +11,7 @@ endblock %} {% block content %}
     </tr>
     {% for enrollment in result %}
     <tr>
-      <td>{{enrollment.student.username}}</td>
+      <td>{{enrollment.student.full_name}}</td>
       <td>{{enrollment.course.title}}</td>
       <td>{{enrollment.course.code}}</td>
       <td>{{enrollment.created_At}}</td>
