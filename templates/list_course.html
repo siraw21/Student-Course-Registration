@@ -2,11 +2,29 @@
 %} {% block content %}
 <h1>Available Courses</h1>
 <div>
-  {% for course in result %}
-  <div>
-    <span>Title: {{course.title}}</span>
-    <span>Code: {{course.code}}</span>
-  </div>
-  {% endfor %}
+  <table border="1">
+    <tr>
+      <th>Title</th>
+      <th>Course Code</th>
+      <th>Credit Hours</th>
+      <th>Description</th>
+      <th>Category</th>
+      <th>Instructor Name</th>
+      <th>Required Year</th>
+      <th>Created Date</th>
+    </tr>
+    {% for course in result %}
+    <tr>
+      <td>{{course.title}}</td>
+      <td>{{course.code}}</td>
+      <td>{{course.credit_hours}}</td>
+      <td>{{course.description}}</td>
+      <td>{{course.category}}</td>
+      <td>{{course.instructor_name}}</td>
+      <td>{{course.required_year}}</td>
+      <td>{{course.created_at}}</td>
+    </tr>
+    {% endfor %}
+  </table>
 </div>
 {% endblock %}

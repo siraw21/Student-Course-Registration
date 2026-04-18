@@ -1,4 +1,4 @@
-from flask import  Blueprint, render_template, redirect, request, session, url_for
+from flask import  Blueprint, render_template, redirect, request, session, url_for, jsonify
 from models import User
 from services.enrollment_service import enroll_course, list_enrollment_courses, list_enrolled_courses
 
@@ -15,15 +15,18 @@ def enroll():
          result = [course.to_dict() for course in courses]  
          return render_template('enroll_course.html', result=result)
       elif request.method == "POST":
-         course_id = request.form.get('course_id')
+         data = request.get_json()
+         # course_id = request.form.get('course_id')
+         course_id = data.get("course_id")
          student_id = session.get('user_id');
 
          enrolled = enroll_course(course_id, student_id)
 
          if enrolled:
-            return redirect(url_for('main.dashboard'))
+            # return redirect(url_for('main.dashboard'))
+            return jsonify({'success': True})
          else:
-             return "Already enrolled"
+             return jsonify({'success': False})
       else:
          return "Error at enroll course"
       
@@ -35,4 +38,4 @@ def enrolled_courses():
       user = User.query.get(user_id)
       enrollments = list_enrolled_courses(user) 
          
-      return render_template('list_enrollments.html', result=enrollments)      
+      return render_template('list_enrollments.html', enrollments=enrollments)      
