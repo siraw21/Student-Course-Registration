@@ -3,7 +3,7 @@ from config import Config
 from extensions import db, migrate
 
 # Models for migration
-from models import User, Course, Enrollment
+from models import User, Course, Enrollment, Student_Profile
 
 #  import controllers or blueprints
 from controllers.main_controller import main_bp

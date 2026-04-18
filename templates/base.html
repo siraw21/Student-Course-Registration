@@ -6,6 +6,9 @@
     {% block title %} {% endblock %}
   </head>
   <body>
-    {% include 'navbar.html' %} {% block content %} {% endblock %}
+    {% include 'navbar.html' %} {% with messages = get_flashed_messages() %} {%
+    for message in messages %}
+    <p>{{message}}</p>
+    {% endfor %} {% endwith %} {% block content %} {% endblock %}
   </body>
 </html>
