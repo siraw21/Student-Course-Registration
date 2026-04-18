@@ -1,9 +1,9 @@
 from models.course import Course
 from extensions import db
 
-def add_course(title, code):
+def add_course(title, code, credit_hours, description, category, instructor_name, required_year):
   if title and code :
-      course = Course(title = title, code = code)
+      course = Course(title = title, code = code, credit_hours = credit_hours, description = description, category = category, instructor_name = instructor_name, required_year = required_year)
 
       db.session.add(course)
       db.session.commit()

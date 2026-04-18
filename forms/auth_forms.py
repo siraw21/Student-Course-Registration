@@ -12,7 +12,7 @@ class RegisterForm(FlaskForm):
           ("3", "Third Year"),
           ("4", "Fourth Year"),
           ("5", "Fifth Year"),
-     ])
+     ], validators=[DataRequired()])
      password = PasswordField("Password", validators=[DataRequired(), Length(min=6, max=12)])
      confirm = PasswordField("Confirm Password", validators=[DataRequired(), EqualTo('password', message ='Passwords must match')])
      submit = SubmitField('Register')
