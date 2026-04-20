@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block title %} <title>Edit course</title> {%
+endblock %} {% block content %}
+<h1>Edit Course</h1>
+<form action="{{url_for('courses.edit_course', id=course.id)}}" method="POST">
+  {{ form.hidden_tag()}} {{ form.title.label }} {{ form.title() }} <br />
+  {{ form.code.label }} {{ form.code() }} <br />
+  {{ form.credit_hours.label }} {{ form.credit_hours() }} <br />
+  {{ form.description.label }} {{ form.description() }} <br />
+  {{ form.category.label }} {{ form.category() }} <br />
+  {{ form.instructor_name.label }} {{ form.instructor_name() }} <br />
+  {{ form.required_year.label }} {{ form.required_year() }} <br />
+  <button>Save Changes</button>
+</form>
+{% endblock %}

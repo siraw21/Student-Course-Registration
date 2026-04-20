@@ -17,3 +17,16 @@ def remove_course(code):
 def list_all_courses():
    courses = Course.query.all()
    return courses   
+
+def get_course(id):
+   course = Course.query.get_or_404(id)
+   return course
+
+def populate_course_obj(form, course):
+    try:
+        form.populate_obj(course)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        return False
