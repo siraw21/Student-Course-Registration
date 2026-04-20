@@ -1,5 +1,5 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session
-from services.course_service import add_course, list_all_courses
+from flask import Blueprint, render_template, flash, redirect, url_for, session
+from services.course_service import add_course, list_all_courses, get_course, populate_course_obj
 from forms.course_forms import CourseDetailForm
 
 course_bp = Blueprint('courses', __name__)
@@ -43,3 +43,22 @@ def list_course():
      return render_template('list_course.html', result=result)
    else:
      return "no available course"
+   
+
+@course_bp.route("/edit/<int:id>", methods=['GET', 'POST'])
+def edit_course(id):
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+    course = get_course(id)
+    form = CourseDetailForm(obj=course)
+
+    if form.validate_on_submit():
+      result = populate_course_obj(form, course)
+      if result:
+            flash("Course updated successfully!", "success")
+            return redirect(url_for('courses.list_course'))
+      else:
+         flash("Error updating course", "danger")
+    return render_template('edit_course.html', form=form, course = course)

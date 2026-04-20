@@ -12,6 +12,7 @@
       <th>Instructor Name</th>
       <th>Required Year</th>
       <th>Created Date</th>
+      <th>Option</th>
     </tr>
     {% for course in result %}
     <tr>
@@ -23,6 +24,9 @@
       <td>{{course.instructor_name}}</td>
       <td>{{course.required_year}}</td>
       <td>{{course.created_At}}</td>
+      <td>
+        <a href="{{ url_for('courses.edit_course', id=course.id)}}">Edit</a>
+      </td>
     </tr>
     {% endfor %}
   </table>
