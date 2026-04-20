@@ -15,3 +15,5 @@ class CourseDetailForm(FlaskForm):
     instructor_name = StringField('Instructor Name:', validators=[DataRequired()])
     required_year = IntegerField("Required_year:", validators=[DataRequired()])
     submit = SubmitField('Add')
+
+   
