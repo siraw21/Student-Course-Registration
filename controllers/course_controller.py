@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, flash, redirect, url_for, session
-from services.course_service import add_course, list_all_courses, get_course, populate_course_obj
+from services.course_service import add_course, list_all_courses, get_course, populate_course_obj, delete_course_service
 from forms.course_forms import CourseDetailForm
 
 course_bp = Blueprint('courses', __name__)
@@ -36,6 +36,9 @@ def create_course():
 def list_course():
    if 'user_id' not in session:
         return redirect(url_for('auth.login'))
+   
+   if session.get('role') != 'admin':
+        return "Unauthorized", 403
    courses = list_all_courses()
    result = [course.to_dict() for course in courses]
      
@@ -62,3 +65,21 @@ def edit_course(id):
       else:
          flash("Error updating course", "danger")
     return render_template('edit_course.html', form=form, course = course)
+
+@course_bp.route("/delete/<int:id>", methods=['POST'])
+def delete_course(id):
+    if 'user_id' not in session:
+        return redirect(url_for('auth.login'))
+    if session.get('role') != 'admin':
+        return "Unauthorized", 403
+    
+    course = get_course(id)
+
+    result = delete_course_service(course)
+
+    if result:
+        flash("Course deleted Successfully")
+    else:
+        flash("Course deletion failed")
+
+    return redirect(url_for('courses.list_course'))    
