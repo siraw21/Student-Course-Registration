@@ -12,7 +12,11 @@ class Course(db.Model):
      instructor_name = db.Column(db.String(150), nullable=False)
 
      created_At = db.Column(db.DateTime, server_default=func.now())
-
+     enrollments = db.relationship(
+        'Enrollment',
+        backref='course',
+        cascade="all, delete-orphan"
+    )
      def to_dict(self):
         return {
            "id": self.id,

@@ -30,3 +30,13 @@ def populate_course_obj(form, course):
     except Exception as e:
         db.session.rollback()
         return False
+    
+def delete_course_service(course):
+    try: 
+        db.session.delete(course)
+        db.session.commit()
+        return True
+    except Exception as e:
+        db.session.rollback()
+        print("DELETE ERROR:", e) 
+        return False    

@@ -8,7 +8,6 @@ class Enrollment(db.Model):
 
      created_At = db.Column(db.DateTime, server_default=func.now())
 
-     course = db.relationship('Course', backref='enrollments')
      student = db.relationship('User', backref='enrollments')
    
 
