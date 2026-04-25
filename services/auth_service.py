@@ -23,6 +23,8 @@ def login_user(username, password):
      
      return None
 
-
+def get_current_user(id):
+     user = User.query.filter_by(id = id).first()
+     return user
 
 

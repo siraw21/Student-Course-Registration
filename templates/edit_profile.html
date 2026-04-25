@@ -1,0 +1,13 @@
+{% extends 'base.html' %} {% block title %} <title>Edit Profile</title> {%
+endblock %} {% block content %}
+<h1>Edit Profile</h1>
+<form action="{{url_for('students.edit_profile')}}" method="POST">
+  {{ form.hidden_tag()}} {{ form.full_name.label }} {{ form.full_name() }}
+  <br />
+  {{ form.student_id.label }} {{ form.student_id() }} <br />
+  {{ form.email.label }} {{ form.email() }} <br />
+  {{ form.year.label }} {{ form.year() }} <br />
+
+  <button>Save</button>
+</form>
+{% endblock %}
