@@ -10,6 +10,7 @@ from controllers.main_controller import main_bp
 from controllers.auth_controller import auth_bp
 from controllers.course_controller import course_bp
 from controllers.enrollment_controller import enrollment_bp
+from controllers.student_controller import student_bp
 
 
 def create_app():
@@ -24,6 +25,7 @@ def create_app():
    app.register_blueprint(auth_bp)
    app.register_blueprint(course_bp)
    app.register_blueprint(enrollment_bp)
+   app.register_blueprint(student_bp)
    
    return app
 

@@ -9,6 +9,8 @@ class User(db.Model):
      password_hash = db.Column(db.String(255), nullable=False)
      email = db.Column(db.String(250), nullable=False)
      created_At = db.Column(db.DateTime, server_default=func.now())
+     
+     student_profile = db.relationship('Student_Profile', backref='user', uselist=False)
 
      def set_password(self, password):
         self.password_hash = generate_password_hash(password)

@@ -22,3 +22,16 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password:', validators=[DataRequired() ]) 
 
     submit = SubmitField('Login')     
+
+
+class EditProfileForm(FlaskForm):
+     full_name = StringField("Full Name:", validators=[DataRequired()])
+     student_id = StringField("Student Id:", validators=[DataRequired(), Length(min=6, message = 'Minimum Length 6 Characters'), ])
+     email = StringField("Email", validators=[DataRequired(), Email()])
+     year = SelectField("Year", choices=[
+          ("2", "Second Year"),
+          ("3", "Third Year"),
+          ("4", "Fourth Year"),
+          ("5", "Fifth Year"),
+     ], validators=[DataRequired()])    
+     submit = SubmitField('Save Change')

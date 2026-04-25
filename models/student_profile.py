@@ -10,7 +10,7 @@ class Student_Profile(db.Model):
 
      created_At = db.Column(db.DateTime, server_default=func.now())
      
-     student = db.relationship('User', backref='Student_Profile')
+
 
      def to_dict(self):
         return {

@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, flash, redirect, url_for, session
 from services.course_service import add_course, list_all_courses, get_course, populate_course_obj, delete_course_service
 from forms.course_forms import CourseDetailForm
 
+
 course_bp = Blueprint('courses', __name__)
 
 @course_bp.route("/new_course", methods=['GET','POST'])
