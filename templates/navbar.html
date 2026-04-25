@@ -82,9 +82,11 @@
           <div class="profile-btn">{{ session.get('username') }}</div>
 
           <div class="dropdown">
+            {% if session.get('role') == 'student' %}
             <a href="{{url_for('students.edit_profile')}}">Edit Profile</a>
-            <a href="{{url_for('main.dashboard')}}">Dashboard</a>
             <a href="{{url_for('enrollments.enrolled_courses')}}">My Courses</a>
+            {% endif %}
+            <a href="{{url_for('main.dashboard')}}">Dashboard</a>
             <a href="{{url_for('auth.logout')}}">Logout</a>
           </div>
         </div>
