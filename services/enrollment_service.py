@@ -1,5 +1,6 @@
 from models.enrollment import Enrollment
 from models.course import Course
+from services.course_service import set_enrolled_status
 from extensions import db
 
 
@@ -12,6 +13,7 @@ def enroll_course(course_id, student_id):
      enrollment = Enrollment(course_id = course_id, student_id = student_id)
      db.session.add(enrollment)
      db.session.commit()
+     set_enrolled_status(course_id)
      return enrollment
   
 def list_enrollment_courses():

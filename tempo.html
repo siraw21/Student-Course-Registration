@@ -1,0 +1,49 @@
+<!-- {% extends 'base.html' %} {% block title %} <title>Enroll</title> {% endblock %}
+{% block content %}
+<h1>Welcome, Enroll in Course</h1>
+
+<div class="filter-bar" style="display: flex; gap: 1rem">
+  <button>All Year</button>
+  <button>2 Year</button>
+  <button>3 Year</button>
+  <button>4 Year</button>
+  <button>5 Year</button>
+</div>
+
+<div class="card-container" style="display: flex; gap: 1rem; flex-wrap: wrap">
+  {% for course in result %}
+  <div
+    class="card"
+    style="
+      background-color: gray;
+      border: 1px solid black;
+      width: 200px;
+      height: 150px;
+      text-align: center;
+    "
+  >
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.code }}</p>
+
+    <input
+      type="hidden"
+      id="course_id"
+      name="course_id"
+      value="{{course.id}}"
+    />
+    <button data-id="{{course.id}}" class="enroll-btn">Enroll</button>
+  </div>
+  {% endfor %}
+</div>
+
+<script src="{{url_for('static', filename='js/enrollmentHandler.js')}}"></script>
+{% endblock %} -->
+
+// const enrollBtns = document.querySelectorAll(".enroll-btn"); //
+enrollBtns.forEach((btn) => { // btn.addEventListener("click", () => { // const
+id = btn.dataset.id; // enroll(id); // }); // }); // async function
+enroll(courseId) { // const response = await fetch("/enrollment", { // method:
+"POST", // headers: { // "Content-Type": "application/json", // }, // body:
+JSON.stringify({ // course_id: courseId, // }), // }); // const data = await
+response.json(); // if (data.success) { // alert("Enrolled successfully"); // }
+else { // alert("Already enrolled"); // } // }

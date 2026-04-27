@@ -40,3 +40,11 @@ def delete_course_service(course):
         db.session.rollback()
         print("DELETE ERROR:", e) 
         return False    
+    
+def set_enrolled_status(course_id):
+    course = Course.query.get(course_id)
+    course.is_enrolled = True
+    db.session.add(course)
+    db.session.commit();    
+
+    return True 

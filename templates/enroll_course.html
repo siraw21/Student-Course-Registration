@@ -1,32 +1,73 @@
-{% extends 'base.html' %} {% block title %} <title>Enroll</title> {% endblock %}
-{% block content %}
-<h1>Welcome, Enroll in Course</h1>
+{% extends 'base.html' %} {% block title %}<title>Enroll in Courses</title>{%
+endblock %} {% block content %}
 
-<div class="card-container" style="display: flex; gap: 1rem; flex-wrap: wrap">
-  {% for course in result %}
-  <div
-    class="card"
-    style="
-      background-color: gray;
-      border: 1px solid black;
-      width: 200px;
-      height: 150px;
-      text-align: center;
-    "
-  >
-    <h1>{{ course.title }}</h1>
-    <p>{{ course.code }}</p>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link
+  href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700&family=DM+Sans:wght@400;500&display=swap"
+  rel="stylesheet"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/enroll.css') }}"
+/>
 
-    <input
-      type="hidden"
-      id="course_id"
-      name="course_id"
-      value="{{course.id}}"
-    />
-    <button data-id="{{course.id}}" class="enroll-btn">Enroll</button>
+<div class="dashboard-wrapper">
+  <div class="dashboard-header">
+    <div>
+      <p class="dept-label">Software Engineering Department</p>
+      <h1 class="dashboard-title">Available Courses</h1>
+    </div>
+    <div class="enrolled-count">
+      <span id="enrolled-counter">0</span>
+      <span class="count-label">Enrolled</span>
+    </div>
   </div>
-  {% endfor %}
+
+  <!-- Filter Tabs -->
+  <div class="filter-bar">
+    <button class="filter-btn active" data-year="all">All Years</button>
+    <button class="filter-btn" data-year="2">2nd Year</button>
+    <button class="filter-btn" data-year="3">3rd Year</button>
+    <button class="filter-btn" data-year="4">4th Year</button>
+    <button class="filter-btn" data-year="5">5th Year</button>
+  </div>
+
+  <!-- Course Grid -->
+  <div class="card-grid" id="card-grid">
+    {% for course in result %}
+    <div class="course-card" data-year="{{ course.required_year }}">
+      <div class="card-top">
+        <span class="course-code">{{ course.code }}</span>
+        <span class="credit-badge">{{ course.credit_hours }} cr</span>
+      </div>
+      <h2 class="course-title">{{ course.title }}</h2>
+      <p class="course-instructor">{{ course.instructor_name }}</p>
+      <div class="card-footer">
+        <span class="year-tag">Year {{ course.required_year }}</span>
+        <button
+          class="enroll-btn"
+          data-id="{{ course.id }}"
+          {%
+          if
+          course.is_enrolled
+          %}disabled{%
+          endif
+          %}
+        >
+          {% if course.is_enrolled %}Enrolled ✓{% else %}Enroll{% endif %}
+        </button>
+      </div>
+    </div>
+    {% else %}
+    <div class="empty-state">No courses available.</div>
+    {% endfor %}
+  </div>
+
+  <!-- Empty state message for filtered results -->
+  <p class="no-results hidden" id="no-results">
+    No courses found for this year.
+  </p>
 </div>
 
-<script src="{{url_for('static', filename='js/enrollmentHandler.js')}}"></script>
+<script src="{{ url_for('static', filename='js/enrollmentHandler.js') }}"></script>
 {% endblock %}
