@@ -1,22 +1,52 @@
-{% extends 'base.html' %} {% block title %} <title>Enrollment</title> {%
-endblock %} {% block content %}
-<h1>Enrollments</h1>
-<div>
-  <table border="1">
-    <tr>
-      <th>Student Name</th>
-      <th>Enrolled Course</th>
-      <th>Course Code</th>
-      <th>Enrolled At</th>
-    </tr>
-    {% for enrollment in enrollments %}
-    <tr>
-      <td>{{enrollment.student.full_name}}</td>
-      <td>{{enrollment.course.title}}</td>
-      <td>{{enrollment.course.code}}</td>
-      <td>{{enrollment.created_At}}</td>
-    </tr>
-    {% endfor %}
-  </table>
+{% extends 'base.html' %} {% block title %}<title>Enrollments</title>{% endblock
+%} {% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/enrollments.css') }}"
+/>
+
+<div class="page-wrapper">
+  <div class="page-header">
+    <p class="dept-label">Software Engineering Department</p>
+    <h1 class="dashboard-title">All Enrollments</h1>
+  </div>
+
+  <div class="table-wrap">
+    <table class="enroll-table">
+      <thead>
+        <tr>
+          <th>Student Name</th>
+          <th>Enrolled Course</th>
+          <th>Course Code</th>
+          <th>Enrolled At</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for enrollment in enrollments %}
+        <tr>
+          <td>
+            <div class="student-cell">
+              <div class="s-avatar">
+                {{ enrollment.student.full_name[0].upper() }}
+              </div>
+              {{ enrollment.student.full_name }}
+            </div>
+          </td>
+          <td>{{ enrollment.course.title }}</td>
+          <td>
+            <span class="course-code-badge">{{ enrollment.course.code }}</span>
+          </td>
+          <td>
+            <span class="date-text">{{ enrollment.created_At }}</span>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="4" class="empty-row">No enrollments found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}
