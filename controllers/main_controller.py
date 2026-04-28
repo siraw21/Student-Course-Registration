@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, session
+from flask import Blueprint, render_template, session, redirect, url_for
 
 main_bp = Blueprint('main', __name__)
 
@@ -10,7 +10,7 @@ def home():
 def dashboard():
     if "user_id" in session:
          if session['role'] == "student":
-            return render_template('student_dashboard.html')
+            return redirect(url_for('enrollments.enroll'))
          elif session['role'] == "admin":
             return render_template('admin_dashboard.html')
          else:

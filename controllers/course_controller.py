@@ -83,4 +83,5 @@ def delete_course(id):
     else:
         flash("Course deletion failed")
 
-    return redirect(url_for('courses.list_course'))    
+    return redirect(url_for('courses.list_course'))   
+

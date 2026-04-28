@@ -10,7 +10,8 @@ class Course(db.Model):
      category = db.Column(db.String(150), nullable=True)
      required_year = db.Column(db.Integer, nullable=False)
      instructor_name = db.Column(db.String(150), nullable=False)
-
+     
+  
      created_At = db.Column(db.DateTime, server_default=func.now())
      enrollments = db.relationship(
         'Enrollment',

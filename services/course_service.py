@@ -40,3 +40,4 @@ def delete_course_service(course):
         db.session.rollback()
         print("DELETE ERROR:", e) 
         return False    
+    

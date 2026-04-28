@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block title %} <title>Student Dashboard</title> {%
 endblock %} {% block content %}
 <h1>Welcome, Student Dashboard</h1>
-<div>
+<!-- <div>
   <ul>
     <li>
       <a href="{{url_for('enrollments.enrolled_courses')}}"
@@ -10,5 +10,33 @@ endblock %} {% block content %}
     </li>
     <li><a href="{{url_for('enrollments.enroll')}}">Enroll in course</a></li>
   </ul>
+</div> -->
+
+<div class="card-container" style="display: flex; gap: 1rem; flex-wrap: wrap">
+  {% for course in result %}
+  <div
+    class="card"
+    style="
+      background-color: gray;
+      border: 1px solid black;
+      width: 200px;
+      height: 150px;
+      text-align: center;
+    "
+  >
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.code }}</p>
+
+    <input
+      type="hidden"
+      id="course_id"
+      name="course_id"
+      value="{{course.id}}"
+    />
+    <button data-id="{{course.id}}" class="enroll-btn">Enroll</button>
+  </div>
+  {% endfor %}
 </div>
+
+<script src="{{url_for('static', filename='js/enrollmentHandler.js')}}"></script>
 {% endblock %}
