@@ -1,0 +1,116 @@
+/* ── Full page centering ── */
+.auth-page {
+  min-height: calc(100vh - 60px); /* 60px = navbar height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.auth-wrap {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* ── Header text ── */
+.auth-top {
+  text-align: center;
+  margin-bottom: 1.8rem;
+}
+
+.auth-title {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0.3rem 0 0.4rem;
+}
+
+.auth-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ── Card ── */
+.form-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+}
+
+/* ── Form fields ── */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.1rem;
+}
+
+.form-group:last-of-type {
+  margin-bottom: 0;
+}
+
+.form-group label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.form-group input {
+  width: 100%;
+  padding: 0.6rem 0.85rem;
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  color: var(--text-primary);
+  background: #f8faff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition:
+    border-color var(--transition),
+    background var(--transition);
+}
+
+.form-group input:focus {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+
+/* ── Submit button ── */
+.btn-submit {
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 0.65rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  color: #fff;
+  background: var(--accent);
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.btn-submit:hover {
+  background: #1d4ed8;
+}
+
+/* ── Footer link ── */
+.auth-footer {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+}
+
+.auth-footer a {
+  color: var(--accent);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.auth-footer a:hover {
+  text-decoration: underline;
+}
