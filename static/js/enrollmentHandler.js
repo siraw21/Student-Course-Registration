@@ -1,7 +1,12 @@
 // ── Enrollment Counter (count already-enrolled on page load) ──
 const enrolledCounter = document.getElementById("enrolled-counter");
-let enrolledCount = document.querySelectorAll(".enroll-btn[disabled]").length;
-enrolledCounter.textContent = enrolledCount;
+
+if (enrolledCounter) {
+  const enrolledCount = document.querySelectorAll(
+    ".enroll-btn[disabled]",
+  ).length;
+  enrolledCounter.textContent = enrolledCount;
+}
 
 // ── Filter Tabs ───────────────────────────────────────────────
 const filterBtns = document.querySelectorAll(".filter-btn");

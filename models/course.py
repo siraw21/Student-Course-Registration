@@ -11,7 +11,7 @@ class Course(db.Model):
      required_year = db.Column(db.Integer, nullable=False)
      instructor_name = db.Column(db.String(150), nullable=False)
      
-     is_enrolled = db.Column(db.Boolean, nullable=False, default=False)
+  
      created_At = db.Column(db.DateTime, server_default=func.now())
      enrollments = db.relationship(
         'Enrollment',
