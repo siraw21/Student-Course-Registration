@@ -114,3 +114,43 @@
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* ── Validation Errors ── */
+.alert-errors {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.2rem;
+}
+
+.alert-errors ul {
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.alert-errors li {
+  font-size: 0.82rem;
+  color: var(--danger);
+  line-height: 1.6;
+}
+
+/* ── Two-column grid (register form) ── */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem 1.2rem;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 480px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-group.full {
+    grid-column: 1;
+  }
+}

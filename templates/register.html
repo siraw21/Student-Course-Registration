@@ -1,25 +1,69 @@
-{% extends 'base.html' %} {% block title %} <title>Login</title> {% endblock %}
+{% extends 'base.html' %} {% block title %}<title>Register</title>{% endblock %}
 {% block content %}
-<div>
-  <h1>Register</h1>
-  {% if form.errors %}
-  <div class="alert alert-danger">
-    <ul>
-      {% for field, errors in form.errors.items() %} {% for error in errors %}
-      <li>{{ error }}</li>
-      {% endfor %} {% endfor %}
-    </ul>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/auth.css') }}"
+/>
+
+<div class="auth-page">
+  <div class="auth-wrap">
+    <div class="auth-top">
+      <p class="dept-label">Software Engineering Department</p>
+      <h1 class="auth-title">Create Account</h1>
+      <span class="auth-subtitle">Register as a new student</span>
+    </div>
+
+    {% if form.errors %}
+    <div class="alert-errors">
+      <ul>
+        {% for field, errors in form.errors.items() %} {% for error in errors %}
+        <li>{{ error }}</li>
+        {% endfor %} {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    <div class="form-card">
+      <form action="{{ url_for('auth.register') }}" method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-grid">
+          <div class="form-group full">
+            {{ form.full_name.label }} {{ form.full_name(placeholder="Enter your
+            full name") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.student_id.label }} {{ form.student_id(placeholder="e.g.
+            SE/001/24") }}
+          </div>
+
+          <div class="form-group">{{ form.year.label }} {{ form.year() }}</div>
+
+          <div class="form-group full">
+            {{ form.email.label }} {{
+            form.email(placeholder="you@university.edu") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.password.label }} {{ form.password(placeholder="Min. 8
+            characters") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.confirm.label }} {{ form.confirm(placeholder="Repeat
+            password") }}
+          </div>
+        </div>
+
+        {{ form.submit(class="btn-submit") }}
+      </form>
+    </div>
+
+    <div class="auth-footer">
+      Already have an account?
+      <a href="{{ url_for('auth.login') }}">Sign in</a>
+    </div>
   </div>
-  {% endif %}
-  <form action="{{url_for('auth.register')}}" method="POST">
-    {{ form.hidden_tag()}} {{ form.full_name.label }} {{ form.full_name() }}
-    <br />
-    {{ form.student_id.label }} {{ form.student_id()}} <br />
-    {{ form.email.label }} {{ form.email() }} <br />
-    {{ form.year.label }} {{ form.year() }} <br />
-    {{ form.password.label }} {{ form.password() }} <br />
-    {{ form.confirm.label }} {{ form.confirm() }} <br /><br />
-    {{form.submit() }}
-  </form>
 </div>
 {% endblock %}
