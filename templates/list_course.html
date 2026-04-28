@@ -1,43 +1,89 @@
-{% extends 'base.html' %} {% block title %} <title>Courses</title> {% endblock
-%} {% block content %}
-<h1>Available Courses</h1>
-<div>
-  <table border="1">
-    <tr>
-      <th>Title</th>
-      <th>Course Code</th>
-      <th>Credit Hours</th>
-      <th>Description</th>
-      <th>Category</th>
-      <th>Instructor Name</th>
-      <th>Required Year</th>
-      <th>Created Date</th>
-      <th>Option</th>
-    </tr>
-    {% for course in result %}
-    <tr>
-      <td>{{course.title}}</td>
-      <td>{{course.code}}</td>
-      <td>{{course.credit_hours}}</td>
-      <td>{{course.description}}</td>
-      <td>{{course.category}}</td>
-      <td>{{course.instructor_name}}</td>
-      <td>{{course.required_year}}</td>
-      <td>{{course.created_At}}</td>
-      <td>
-        <a href="{{ url_for('courses.edit_course', id=course.id)}}">Edit</a>
-        <form
-          action="{{ url_for('courses.delete_course', id=course.id)}}"
-          method="POST"
-          style="display: inline"
-        >
-          <button type="submit" onclick="return confirm('Are you sure?');">
-            Delete
-          </button>
-        </form>
-      </td>
-    </tr>
-    {% endfor %}
-  </table>
+{% extends 'base.html' %} {% block title %}<title>Courses</title>{% endblock %}
+{% block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/courses.css') }}"
+/>
+
+<div class="page-wrapper">
+  <div class="page-top">
+    <div>
+      <p class="dept-label">Software Engineering Department</p>
+      <h1 class="dashboard-title">Available Courses</h1>
+    </div>
+    <a href="{{ url_for('courses.create_course') }}" class="btn-primary"
+      >+ Add Course</a
+    >
+  </div>
+
+  <div class="table-wrap">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Code</th>
+          <th>Credits</th>
+          <th>Description</th>
+          <th>Category</th>
+          <th>Instructor</th>
+          <th>Year</th>
+          <th>Created</th>
+          <th>Options</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for course in result %}
+        <tr>
+          <td><span class="course-title">{{ course.title }}</span></td>
+          <td><span class="code-badge">{{ course.code }}</span></td>
+          <td>
+            <span class="credit-badge">{{ course.credit_hours }} cr</span>
+          </td>
+          <td>
+            <span class="desc-text" title="{{ course.description }}">
+              {{ course.description }}
+            </span>
+          </td>
+          <td>{{ course.category }}</td>
+          <td>{{ course.instructor_name }}</td>
+          <td>
+            <span class="year-badge">Year {{ course.required_year }}</span>
+          </td>
+          <td><span class="date-text">{{ course.created_At }}</span></td>
+          <td>
+            <div class="row-actions">
+              <a
+                href="{{ url_for('courses.edit_course', id=course.id) }}"
+                class="btn-edit"
+                >Edit</a
+              >
+              <form
+                action="{{ url_for('courses.delete_course', id=course.id) }}"
+                method="POST"
+                style="display: inline"
+              >
+                <button
+                  type="submit"
+                  class="btn-delete"
+                  onclick="
+                    return confirm(
+                      'Are you sure you want to delete this course?',
+                    );
+                  "
+                >
+                  Delete
+                </button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        {% else %}
+        <tr>
+          <td colspan="9" class="empty-row">No courses found.</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
 </div>
 {% endblock %}
