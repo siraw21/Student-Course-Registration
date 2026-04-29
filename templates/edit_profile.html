@@ -15,9 +15,9 @@ endblock %} {% block content %}
     <!-- Avatar Panel -->
     <div class="avatar-panel">
       <div class="avatar-circle">
-        {{ session.get('username', 'S')[0].upper() }}
+        {{ (session.get('username') or 'S')[0].upper() }}
       </div>
-      <p class="avatar-name">{{ session.get('username') }}</p>
+      <p class="avatar-name">{{ session.get('username') or 'Student' }}</p>
       <p class="avatar-role">Student</p>
     </div>
 
