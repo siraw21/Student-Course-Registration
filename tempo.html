@@ -47,3 +47,110 @@ enroll(courseId) { // const response = await fetch("/enrollment", { // method:
 JSON.stringify({ // course_id: courseId, // }), // }); // const data = await
 response.json(); // if (data.success) { // alert("Enrolled successfully"); // }
 else { // alert("Already enrolled"); // } // }
+
+<!-- navbar  -->
+<style>
+  /* .navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background: #333;
+    color: white;
+  } */
+
+  .profile {
+    position: relative;
+  }
+
+  .profile-btn {
+    cursor: pointer;
+    padding: 8px;
+    background: #555;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    background: white;
+    color: black;
+    min-width: 150px;
+    border-radius: 5px;
+  }
+
+  .dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+  }
+
+  .dropdown a:hover {
+    background: #f0f0f0;
+  }
+
+  /* Show dropdown */
+  .profile:hover .dropdown {
+    display: block;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .navbar {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<div
+  style="
+    background-color: #22226e;
+    padding: 1rem;
+    color: white;
+    list-style-type: none;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  "
+>
+  <div class="brand">Student Course Registration</div>
+  <nav>
+    <ul
+      style="
+        display: flex;
+        list-style-type: none;
+        gap: 1rem;
+        text-decoration: none;
+      "
+    >
+      {% if session.get('username') %}
+
+      <li>
+        <!-- <a style="color: white" href="{{url_for('auth.logout')}}">Logout</a> -->
+        <div class="profile">
+          <div class="profile-btn">{{ session.get('username') }}</div>
+
+          <div class="dropdown">
+            {% if session.get('role') == 'student' %}
+            <a href="{{url_for('students.edit_profile')}}">Edit Profile</a>
+            <a href="{{url_for('enrollments.enrolled_courses')}}">My Courses</a>
+            {% endif %}
+            <a href="{{url_for('main.dashboard')}}">Dashboard</a>
+            <a href="{{url_for('auth.logout')}}">Logout</a>
+          </div>
+        </div>
+      </li>
+      {% else %}
+      <li><a style="color: white" href="{{url_for('main.home')}}">Home</a></li>
+      <li>
+        <a style="color: white" href="{{url_for('auth.login')}}">Login</a>
+      </li>
+      <li>
+        <a style="color: white" href="{{url_for('auth.register')}}">Register</a>
+      </li>
+      {% endif %}
+    </ul>
+  </nav>
+</div>

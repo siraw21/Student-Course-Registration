@@ -1,0 +1,108 @@
+.page-wrapper {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.page-header {
+  margin-bottom: 2rem;
+}
+
+/* ── Table Container ── */
+.table-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+/* ── Table Base ── */
+.enroll-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* ── Header Row ── */
+.enroll-table thead {
+  background: var(--accent-light);
+}
+
+.enroll-table thead th {
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--accent);
+  font-weight: 600;
+  border-bottom: 1px solid var(--border);
+}
+
+/* ── Body Rows ── */
+.enroll-table tbody tr {
+  border-bottom: 1px solid var(--surface-2);
+  transition: background var(--transition);
+}
+
+.enroll-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.enroll-table tbody tr:hover {
+  background: #f8faff;
+}
+
+.enroll-table tbody td {
+  padding: 0.9rem 1.1rem;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  vertical-align: middle;
+}
+
+/* ── Student Cell with Avatar ── */
+.student-cell {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.s-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: var(--accent-light);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Course Code Badge ── */
+.course-code-badge {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: var(--accent-light);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.15rem 0.55rem;
+  letter-spacing: 0.05em;
+}
+
+/* ── Date ── */
+.date-text {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+}
+
+/* ── Empty State ── */
+.empty-row {
+  text-align: center;
+  padding: 3rem !important;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}

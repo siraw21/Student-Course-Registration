@@ -1,15 +1,95 @@
-{% extends 'base.html' %} {% block title %} <title>Admin Dashboard</title> {%
+{% extends 'base.html' %} {% block title %}<title>Admin Dashboard</title>{%
 endblock %} {% block content %}
-<h1>Welcome, Admin Dashboard</h1>
-<div>
-  <ul>
-    <li><a href="{{url_for('courses.list_course')}}">View all Course</a></li>
-    <li>
-      <a href="{{url_for('enrollments.enrolled_courses')}}"
-        >View all Enrollment</a
-      >
-    </li>
-    <li><a href="{{url_for('courses.create_course')}}">Add Course</a></li>
-  </ul>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/admin.css') }}"
+/>
+
+<div class="admin-wrapper">
+  <div class="admin-header">
+    <p class="dept-label">Software Engineering Department</p>
+    <h1 class="dashboard-title">Admin Dashboard</h1>
+  </div>
+
+  <div class="admin-grid">
+    <a href="{{ url_for('courses.list_course') }}" class="admin-card">
+      <div class="card-icon icon-blue">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#2563eb"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+          />
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-label">Courses</p>
+        <p class="card-title">All Courses</p>
+        <p class="card-desc">
+          Browse and manage every course in the department.
+        </p>
+      </div>
+      <div class="card-footer">View courses →</div>
+    </a>
+
+    <a href="{{ url_for('enrollments.enrolled_courses') }}" class="admin-card">
+      <div class="card-icon icon-green">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#16a34a"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 11l3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-label">Enrollments</p>
+        <p class="card-title">All Enrollments</p>
+        <p class="card-desc">
+          See which students are enrolled in which courses.
+        </p>
+      </div>
+      <div class="card-footer">View enrollments →</div>
+    </a>
+
+    <a href="{{ url_for('courses.create_course') }}" class="admin-card">
+      <div class="card-icon icon-amber">
+        <svg
+          width="22"
+          height="22"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#d97706"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="12" r="10" />
+          <line x1="12" y1="8" x2="12" y2="16" />
+          <line x1="8" y1="12" x2="16" y2="12" />
+        </svg>
+      </div>
+      <div class="card-body">
+        <p class="card-label">Courses</p>
+        <p class="card-title">Add New Course</p>
+        <p class="card-desc">Create and publish a new course for students.</p>
+      </div>
+      <div class="card-footer">Add course →</div>
+    </a>
+  </div>
 </div>
 {% endblock %}

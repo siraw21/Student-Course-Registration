@@ -1,13 +1,58 @@
-{% extends 'base.html' %} {% block title %} <title>Edit Profile</title> {%
+{% extends 'base.html' %} {% block title %}<title>Edit Profile</title>{%
 endblock %} {% block content %}
-<h1>Edit Profile</h1>
-<form action="{{url_for('students.edit_profile')}}" method="POST">
-  {{ form.hidden_tag()}} {{ form.full_name.label }} {{ form.full_name() }}
-  <br />
-  {{ form.student_id.label }} {{ form.student_id() }} <br />
-  {{ form.email.label }} {{ form.email() }} <br />
-  {{ form.year.label }} {{ form.year() }} <br />
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/profile.css') }}"
+/>
 
-  <button>Save</button>
-</form>
+<div class="page-wrapper">
+  <div class="page-header">
+    <p class="dept-label">Software Engineering Department</p>
+    <h1 class="dashboard-title">Edit Profile</h1>
+  </div>
+
+  <div class="profile-layout">
+    <!-- Avatar Panel -->
+    <div class="avatar-panel">
+      <div class="avatar-circle">
+        {{ (session.get('username') or 'S')[0].upper() }}
+      </div>
+      <p class="avatar-name">{{ session.get('username') or 'Student' }}</p>
+      <p class="avatar-role">Student</p>
+    </div>
+
+    <!-- Form Panel -->
+    <div class="form-card">
+      <form action="{{ url_for('students.edit_profile') }}" method="POST">
+        {{ form.hidden_tag() }}
+
+        <div class="form-grid">
+          <div class="form-group full">
+            {{ form.full_name.label }} {{ form.full_name(placeholder="Enter your
+            full name") }}
+          </div>
+
+          <div class="form-group">
+            {{ form.student_id.label }} {{ form.student_id(placeholder="e.g.
+            SE/001/24") }}
+          </div>
+
+          <div class="form-group">{{ form.year.label }} {{ form.year() }}</div>
+
+          <div class="form-group full">
+            {{ form.email.label }} {{
+            form.email(placeholder="you@university.edu") }}
+          </div>
+        </div>
+
+        <div class="form-footer">
+          <a href="{{ url_for('main.dashboard') }}" class="btn-cancel"
+            >Cancel</a
+          >
+          <button type="submit" class="btn-submit">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
 {% endblock %}
