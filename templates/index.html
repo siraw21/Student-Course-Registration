@@ -1,7 +1,110 @@
-{% extends 'base.html' %} {% block title %} <title>Home</title> {% endblock %}
-{% block content %}
-<div>
-  <h1>Welcome to Student course Registration</h1>
-  <h1>{{error}}</h1>
+{% extends 'base.html' %} {% block title %}<title>Home</title>{% endblock %} {%
+block content %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/home.css') }}"
+/>
+
+{% if error %}
+<div class="alert-errors" style="max-width: 700px; margin: 1rem auto">
+  <ul>
+    <li>{{ error }}</li>
+  </ul>
 </div>
+{% endif %}
+
+<!-- ── Hero ── -->
+<section class="hero">
+  <p class="hero-label">Software Engineering Department</p>
+  <h1>Register Your Courses,<br />Plan Your Future</h1>
+  <p class="hero-sub">A simple and fast way to enroll in and manage courses.</p>
+  <div class="hero-btns">
+    <a href="{{ url_for('auth.register') }}" class="btn-white">Get Started</a>
+    <a href="{{ url_for('auth.login') }}" class="btn-outline-white">Sign In</a>
+  </div>
+</section>
+
+<!-- ── Features ── -->
+<section class="features">
+  <p class="section-label">Why use this platform</p>
+  <h2 class="section-title">Everything you need in one place</h2>
+
+  <div class="feature-grid">
+    <div class="feature-card">
+      <div class="f-icon f-blue">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#2563eb"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+          <path
+            d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"
+          />
+        </svg>
+      </div>
+      <h3>Browse Courses</h3>
+      <p>
+        Explore all available courses for your year and department in one clean
+        view.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="f-icon f-green">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#16a34a"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M9 11l3 3L22 4" />
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11" />
+        </svg>
+      </div>
+      <h3>Easy Enrollment</h3>
+      <p>
+        Enroll in courses with a single click and track everything you've
+        registered for.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <div class="f-icon f-amber">
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="#d97706"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="12" cy="8" r="6" />
+          <path d="M15.477 12.89L17 22l-5-3-5 3 1.523-9.11" />
+        </svg>
+      </div>
+      <h3>Year-based Filtering</h3>
+      <p>See only what's relevant to your year .</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA ── -->
+<section class="cta">
+  <h2>Ready to get started?</h2>
+  <p>Create your account and enroll in your first course today.</p>
+  <a href="{{ url_for('auth.register') }}" class="btn-accent">Register Now</a>
+</section>
+
 {% endblock %}
