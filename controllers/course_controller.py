@@ -24,9 +24,11 @@ def create_course():
             # Course logic
             
             if course:
+              flash("Course successfully created!", 'success')
               return redirect(url_for('main.dashboard'))
             else:
-               return "sth is wrong"
+               flash("Course code must be unique", 'error')
+               return redirect(url_for('courses.create_course'))
          else:
             return render_template('create_course.html', form = form)   
    else:
@@ -64,7 +66,7 @@ def edit_course(id):
             flash("Course updated successfully!", "success")
             return redirect(url_for('courses.list_course'))
       else:
-         flash("Error updating course", "danger")
+         flash("Error updating course", "error")
     return render_template('edit_course.html', form=form, course = course)
 
 @course_bp.route("/delete/<int:id>", methods=['POST'])
@@ -79,9 +81,9 @@ def delete_course(id):
     result = delete_course_service(course)
 
     if result:
-        flash("Course deleted Successfully")
+        flash("Course deleted Successfully", "success")
     else:
-        flash("Course deletion failed")
+        flash("Course deletion failed", 'error')
 
     return redirect(url_for('courses.list_course'))   
 
