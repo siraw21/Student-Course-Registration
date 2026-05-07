@@ -16,18 +16,12 @@
       {{ form.hidden_tag() }}
 
       <div class="form-grid">
-        <div class="form-group">
-          {{ form.title.label }} {{ form.title(placeholder="e.g. Data
-          Structures") }}
-        </div>
+        <div class="form-group">{{ form.title.label }} {{ form.title() }}</div>
+
+        <div class="form-group">{{ form.code.label }} {{ form.code() }}</div>
 
         <div class="form-group">
-          {{ form.code.label }} {{ form.code(placeholder="e.g. SE201") }}
-        </div>
-
-        <div class="form-group">
-          {{ form.credit_hours.label }} {{ form.credit_hours(placeholder="e.g.
-          3") }}
+          {{ form.credit_hours.label }} {{ form.credit_hours() }}
         </div>
 
         <div class="form-group">
@@ -35,8 +29,7 @@
         </div>
 
         <div class="form-group">
-          {{ form.instructor_name.label }} {{
-          form.instructor_name(placeholder="e.g. Dr. Ahmed") }}
+          {{ form.instructor_name.label }} {{ form.instructor_name() }}
         </div>
 
         <div class="form-group">
@@ -44,8 +37,7 @@
         </div>
 
         <div class="form-group full">
-          {{ form.description.label }} {{ form.description(placeholder="Brief
-          course description...") }}
+          {{ form.description.label }} {{ form.description() }}
         </div>
       </div>
 
