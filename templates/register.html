@@ -29,30 +29,25 @@
 
         <div class="form-grid">
           <div class="form-group full">
-            {{ form.full_name.label }} {{ form.full_name(placeholder="Enter your
-            full name") }}
+            {{ form.full_name.label }} {{ form.full_name() }}
           </div>
 
           <div class="form-group">
-            {{ form.student_id.label }} {{ form.student_id(placeholder="e.g.
-            SE/001/24") }}
+            {{ form.student_id.label }} {{ form.student_id() }}
           </div>
 
           <div class="form-group">{{ form.year.label }} {{ form.year() }}</div>
 
           <div class="form-group full">
-            {{ form.email.label }} {{
-            form.email(placeholder="you@university.edu") }}
+            {{ form.email.label }} {{ form.email() }}
           </div>
 
           <div class="form-group">
-            {{ form.password.label }} {{ form.password(placeholder="Min. 8
-            characters") }}
+            {{ form.password.label }} {{ form.password() }}
           </div>
 
           <div class="form-group">
-            {{ form.confirm.label }} {{ form.confirm(placeholder="Repeat
-            password") }}
+            {{ form.confirm.label }} {{ form.confirm() }}
           </div>
         </div>
 
