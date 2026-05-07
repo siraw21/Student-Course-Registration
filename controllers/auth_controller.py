@@ -1,4 +1,4 @@
-from flask import Blueprint, flash, request, render_template, url_for, redirect, session
+from flask import Blueprint, flash, render_template, url_for, redirect, session
 from services.auth_service import register_user, login_user
 from services.student_service import create_student_profile
 from forms.auth_forms import RegisterForm, LoginForm
@@ -30,7 +30,7 @@ def register():
                 if student_profile:
                     return redirect(url_for('main.dashboard'))  
             else:
-                flash('User Already exits')
+                flash('User Already exits', 'error')
                 return redirect(url_for('auth.register'))
         else:
             return render_template('register.html', form = form)
@@ -49,10 +49,10 @@ def login():
             session['username'] = user.full_name
             session['role'] = user.role
             session['user_id'] = user.id
-            flash(f"Welcome back, {session['username']}!")
+            flash(f"Welcome back, {session['username']}!", 'success')
             return redirect(url_for('main.dashboard'))
         else:
-            flash('Password or Username invalid')
+            flash('Password or Username invalid', 'error')
             return redirect(url_for('auth.login'))
       else:
          return render_template('login.html', form = form)

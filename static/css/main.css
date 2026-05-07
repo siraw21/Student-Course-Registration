@@ -6,6 +6,8 @@
   --border: #d0dce8;
   --accent: #2563eb;
   /* --accent: #0d1b2a; */
+  /* --accent: #162b42; */
+  /* --accent-light: #1a2f45; */
   --accent-light: #eff6ff;
   --text-primary: #1e293b;
   --text-muted: #64748b;
@@ -174,6 +176,82 @@ a {
 /* Show dropdown on hover — same as before, no JS needed */
 .dropdown.open {
   display: block;
+}
+
+/* ── Flash Messages ── */
+.flash-container {
+  max-width: 560px;
+  margin: 1.2rem auto 0;
+  padding: 0 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.flash {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.flash-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.flash-text {
+  flex: 1;
+}
+
+.flash-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  line-height: 1;
+  opacity: 0.45;
+  padding: 0;
+  transition: opacity var(--transition);
+  flex-shrink: 0;
+}
+
+.flash-close:hover {
+  opacity: 1;
+}
+
+/* success */
+.flash.success {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #15803d;
+}
+.flash.success .flash-icon {
+  background: #dcfce7;
+  color: var(--success);
+}
+
+/* error */
+.flash.error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #b91c1c;
+}
+.flash.error .flash-icon {
+  background: #fee2e2;
+  color: var(--danger);
 }
 
 /* ── Responsive ── */

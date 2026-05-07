@@ -10,10 +10,33 @@
     {% block title %} {% endblock %}
   </head>
   <body>
-    {% include 'navbar.html' %} {% with messages = get_flashed_messages() %} {%
+    {% include 'navbar.html' %} {% with messages =
+    get_flashed_messages(with_categories=true) %} {% if messages %}
+    <div class="flash-container">
+      {% for category, message in messages %}
+      <div class="flash {{ category }}">
+        <div class="flash-icon">
+          {% if category == 'success' %}✓ {% elif category == 'error' %}✕ {%
+          elif category == 'warning' %}! {% else %}i {% endif %}
+        </div>
+        <span class="flash-text">{{ message }}</span>
+        <button class="flash-close" onclick="this.parentElement.remove()">
+          ✕
+        </button>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %} {% endwith %}
+    <!-- {% with messages =
+    get_flashed_messages(with_categories=true) %} {% if messages %} {% for
+    category, message in messages %}
+    <div class="flash {{ category }}">{{ message }}</div>
+    {% endfor %} {% endif %} {% endwith %} -->
+    <!-- {% with messages = get_flashed_messages() %} {%
     for message in messages %}
     <p>{{message}}</p>
-    {% endfor %} {% endwith %} {% block content %} {% endblock %}
+    {% endfor %} {% endwith %}  -->
+    {% block content %} {% endblock %}
     <script>
       const profileBtn = document.querySelector(".profile-btn");
       const dropdown = document.querySelector(".dropdown");
