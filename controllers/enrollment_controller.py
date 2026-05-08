@@ -11,14 +11,11 @@ def enroll():
         return redirect(url_for('auth.login'))
       
       if request.method ==  "GET":
-         # courses = list_enrollment_courses()
-         # result = [course.to_dict() for course in courses]  
          student_id = session.get('user_id')
          result = list_enrollment_courses(student_id)
          return render_template('enroll_course.html', result=result)
       elif request.method == "POST":
          data = request.get_json()
-         # course_id = request.form.get('course_id')
          course_id = data.get("course_id")
          student_id = session.get('user_id');
 
